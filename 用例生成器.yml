@@ -1,0 +1,505 @@
+app:
+  description: 输入需求，生成用例
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 用例生成器
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.19@219552f62b54919d6fd317c737956d3b2cc97719b85f0179bb995e5a512b7ebb
+kind: app
+version: 0.3.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1741161209194-true-1741158020019-target
+      source: '1741161209194'
+      sourceHandle: 'true'
+      target: '1741158020019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: end
+      id: 1741161209194-false-1741161237429-target
+      source: '1741161209194'
+      sourceHandle: 'false'
+      target: '1741161237429'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1741156635404-source-1749189541518-target
+      source: '1741156635404'
+      sourceHandle: source
+      target: '1749189541518'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1749189541518-source-1741161209194-target
+      source: '1749189541518'
+      sourceHandle: source
+      target: '1741161209194'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1741158020019-source-1749433084045-target
+      source: '1741158020019'
+      sourceHandle: source
+      target: '1749433084045'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1741156607412-source-1741156635404-target
+      selected: false
+      source: '1741156607412'
+      sourceHandle: source
+      target: '1741156635404'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1749433084045-source-1754893203587-target
+      source: '1749433084045'
+      sourceHandle: source
+      target: '1754893203587'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1754893203587-source-1754893242476-target
+      source: '1754893203587'
+      sourceHandle: source
+      target: '1754893242476'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 输入详细需求，尽可能详细
+          max_length: 512
+          options: []
+          required: true
+          type: paragraph
+          variable: in_require
+        - label: 功能用例占比
+          max_length: 48
+          options: []
+          required: false
+          type: number
+          variable: functional_testing
+        - label: 边界用例
+          max_length: 48
+          options: []
+          required: false
+          type: number
+          variable: boundary_testing
+        - label: 异常用例
+          max_length: 48
+          options: []
+          required: false
+          type: number
+          variable: exception_testing
+        - label: 性能/兼容性占比
+          max_length: 48
+          options: []
+          required: false
+          type: number
+          variable: perfmon_testing
+        - label: 回归测试用例
+          max_length: 48
+          options: []
+          required: false
+          type: number
+          variable: regression_testing
+      height: 220
+      id: '1741156607412'
+      position:
+        x: 30
+        y: 263
+      positionAbsolute:
+        x: 30
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1741156607412'
+          - in_require
+        default_value:
+        - key: text
+          type: string
+          value: 用例编写异常，大模型调用错误
+        desc: ''
+        error_strategy: default-value
+        model:
+          completion_params:
+            temperature: 0.7
+            top_p: 0.95
+          mode: chat
+          name: deepseek-r1-distill-llama-70b
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 56c38d07-ea67-4dcc-ae15-e8af3cd58d41
+          role: system
+          text: "你是一位拥有10年经验的资深测试用例编写专家，能够根据需求精确生成高质量的测试用例，请根据需求文档按照以下规范编写专业测试用例：\n\
+            #角色设定：\n1. 身份：行业高级QA专家\n2. 测试风格：黑盒+白盒结合，注重异常流和回归覆盖\n3. 思维模式：破坏性测试思维+用户体验验证双维度\n\
+            #重要规则：\n1. 确保每个用例ID唯一，避免重复\n2. 采用清晰的Markdown格式输出\n3. 确保测试用例覆盖有效和无效等价类，关键功能路径和边界条件(二值法)\n\
+            #测试策略：\n1. **用例分类**\n   - 功能验证用例（{{#1741156607412.functional_testing#}}%）\n\
+            \   - 边界用例（{{#1741156607412.boundary_testing#}}%）\n   - 异常场景用例（{{#1741156607412.exception_testing#}}%）\n\
+            \   - 性能/兼容性用例（{{#1741156607412.perfmon_testing#}}%）\n   - 回归测试用例（{{#1741156607412.regression_testing#}}%）\n\
+            2. **用例设计原则**\n   - 包含用例ID（[模块]_[序号]）、测试目标、前置条件、优先级（P0-P3）\n   - 具体的预期结果[重复上述模板直到达到指定的用例数量]\n\
+            #输入数据：\n{{#context#}}\n#输出格式：\n```markdown\n| 用例ID | 测试目标 | 用例摘要 | 前置条件\
+            \ | 操作步骤 | 预期结果 | 优先级 | 测试类型 | 关联需求 |\n|--------|--------|--------|--------|--------|--------|--------|--------|--------|\n\
+            #最后总结：\n1. 测试覆盖度：描述测试覆盖的方面\n2. 建议：任何关于测试执行及需求的建议\n#输出标志：\n完成后，请以OVER为结尾标记来输出"
+        selected: false
+        structured_output_enabled: false
+        title: 初次分解
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 126
+      id: '1741156635404'
+      position:
+        x: 334
+        y: 263
+      positionAbsolute:
+        x: 334
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1749189541518'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+            top_p: 0.95
+          mode: chat
+          name: deepseek-r1-distill-llama-70b
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: fcc04c86-172b-4fe8-8620-f8b435a6450d
+          role: system
+          text: '您是一名资深测试项目经理，你可以对上面给定的测试用例进行评审。对于缺少的用例进行补充，当您的反馈得到处理时，请回复“APPROVE”。
+
+            #重要规则：
+
+            1. 请用简体中文输出内容
+
+            2. 采用清晰的Markdown格式输出
+
+            3. 确保测试用例覆盖关键功能路径和边界条件
+
+            #输入内容：
+
+            {{#context#}}
+
+            #输出格式：
+
+            ```markdown
+
+            | 用例ID | 测试目标 | 用例摘要 | 前置条件 | 操作步骤 | 预期结果 | 优先级 | 测试类型 | 关联需求 |
+
+            |--------|--------|--------|--------|--------|--------|--------|--------|--------|'
+        selected: true
+        title: 二次审核
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1741158020019'
+      position:
+        x: 1246
+        y: 263
+      positionAbsolute:
+        x: 1246
+        y: 263
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: bc80e40b-1e61-4581-8d6f-684e8478ff8d
+            value: 用例
+            varType: string
+            variable_selector:
+            - '1749189541518'
+            - result
+          id: 'true'
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 返回内容包含用例
+        type: if-else
+      height: 126
+      id: '1741161209194'
+      position:
+        x: 942
+        y: 263
+      positionAbsolute:
+        x: 942
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1741156635404'
+          - text
+          variable: text
+        selected: false
+        title: 结束 2
+        type: end
+      height: 90
+      id: '1741161237429'
+      position:
+        x: 1246
+        y: 393
+      positionAbsolute:
+        x: 1246
+        y: 393
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(query: str, answer: str) -> dict:\n    thinkover_index = answer.find('</think>')\n\
+          \    out_string = answer[thinkover_index+10:]\n    return {\n        \"\
+          result\": out_string,\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 过滤think内容
+        type: code
+        variables:
+        - value_selector:
+          - '1741156635404'
+          - text
+          variable: query
+        - value_selector:
+          - '1741156635404'
+          - text
+          variable: answer
+      height: 54
+      id: '1749189541518'
+      position:
+        x: 638
+        y: 263
+      positionAbsolute:
+        x: 638
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(query: str, answer: str) -> dict:\n    thinkover_index = answer.find('</think>')\n\
+          \    out_string = answer[thinkover_index+10:]\n    return {\n        \"\
+          result2\": out_string,\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result2:
+            children: null
+            type: string
+        selected: false
+        title: 过滤think
+        type: code
+        variables:
+        - value_selector:
+          - '1741158020019'
+          - text
+          variable: query
+        - value_selector:
+          - '1741158020019'
+          - text
+          variable: answer
+      height: 54
+      id: '1749433084045'
+      position:
+        x: 1550
+        y: 263
+      positionAbsolute:
+        x: 1550
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str, arg2: str) -> dict:\n    return {\n        \"\
+          resultnew\": arg1 + arg2,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          resultnew:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行 3
+        type: code
+        variables:
+        - value_selector:
+          - '1749189541518'
+          - result
+          variable: arg1
+        - value_selector:
+          - '1749433084045'
+          - result2
+          variable: arg2
+      height: 54
+      id: '1754893203587'
+      position:
+        x: 1854
+        y: 263
+      positionAbsolute:
+        x: 1854
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1754893203587'
+          - resultnew
+          variable: resultnew
+        selected: false
+        title: 结束 3
+        type: end
+      height: 90
+      id: '1754893242476'
+      position:
+        x: 2158
+        y: 263
+      positionAbsolute:
+        x: 2158
+        y: 263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 320.9999999999991
+      y: 150.99999999999994
+      zoom: 0.7
